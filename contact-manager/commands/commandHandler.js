@@ -1,15 +1,25 @@
+const {
+  serviceSearch,
+  serviceAdd,
+  serviceList,
+  serviceDelete,
+  serviceHelp,
+} = require("../services/contactService");
 
-const commandAdd = () => {}
-const commandList = () => {}
-const commandSearch = () => {}
-const commandDelete = () => {}
-const commandHelp = () => {}
+const commandAdd = () => {};
+const commandList = () => {
+  serviceList();
+};
+const commandSearch = () => {};
+const commandDelete = () => {};
+const commandHelp = () => {
+  serviceHelp();
+};
 
-
-module.export ={
-    commandAdd,
-    commandList,
-    commandSearch,
-    commandDelete,
-    commandHelp
-}
+module.exports = {
+  commandAdd,
+  commandList,
+  commandSearch,
+  commandDelete,
+  commandHelp,
+};
