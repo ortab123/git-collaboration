@@ -13,29 +13,34 @@ function serviceAdd(name, email, telephone) {
 }
 
 function serviceDelete(email) {
-    if (emailValidation(email)) {
-      const { status, message, savedMessage } = deleteFromJSON(email)
-      if (status) {
-        console.log(message) // ✓ Contact deleted
-        console.log(savedMessage) // ✓ Contacts saved
-      } else {
-        console.log(savedMessage) // ✗ Error: cannot write to the file
-                                  // ✗ Error: No contact found with email
-      }
+  if (emailValidation(email)) {
+    const { status, message, savedMessage } = deleteFromJSON(email)
+    if (status) {
+      console.log(message) // ✓ Contact deleted
+      console.log(savedMessage) // ✓ Contacts saved
+    } else {
+      console.log(savedMessage) // ✗ Error: cannot write to the file
+      // ✗ Error: No contact found with email
     }
+  }
 }
 
 function serviceSearch(query) {
-  if (query.trim() === "") {
+  if (!query) {
     console.log("✗ Error: invalid search query")
     return
   }
 
-  try{
-    searchInJSON(query.trim())
-  } catch (err) {
-    console.error(err.message);
-    
+  const trimmedQuery = query.trim()
+
+  const { status, message } = searchInJSON(trimmedQuery)
+
+  console.log(`\n=== Search Results for "${trimmedQuery}" ===`)
+
+  if (status) {
+    message.forEach((contact) => console.log(contact))
+  } else {
+    console.log(message) // No contacts found matching
   }
 }
 

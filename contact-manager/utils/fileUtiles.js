@@ -28,16 +28,19 @@ const writeContactsToFile = () => {
   try {
     const jsonData = JSON.stringify(contacts, null, 2)
     fs.writeFileSync(filePath, jsonData, "utf8")
-
   } catch (err) {
     throw new Error("✗ Error: cannot write to the file")
   }
 }
 
 const printContactList = (list) => {
+  const results = []
+
   list.forEach((contact, index) => {
-    console.log(`${index + 1}. ${contact.name} - ${contact.email} - ${contact.telephone}`)
+    results.push(`${index + 1}. ${contact.name} - ${contact.email} - ${contact.telephone}`)
   })
+
+  return results
 }
 
 const saveIntoJSON = (newContact) => {
@@ -92,16 +95,17 @@ const searchInJSON = (param) => {
   loadData()
   const searchParam = param.toLowerCase()
 
-  const contactToFind = contacts.filter((contact) => contact.email === param || contact.name.toLowerCase().includes(searchParam))
+  const contactToFind = contacts.filter((contact) => contact.email.toLowerCase().includes(searchParam) || contact.name.toLowerCase().includes(searchParam))
 
-  console.log(`\n=== Search Results for "${param}" ===`)
-
-  if (contactToFind.length === 0) {
-    throw new Error(`No contacts found matching "${param}"`)
-  } else {
-    printContactList(contactToFind)
-    //TODO: remove printContactList logic to serviceSearch
-    //printContactList must return an array to serviceSearch
+  try {
+    if (contactToFind.length === 0) {
+      throw new Error(`No contacts found matching "${param}"`)
+    } else {
+      const finded = printContactList(contactToFind)
+      return {status: true, message: finded}
+    }
+  } catch (err) {
+    return {status: false, message: err.message}
   }
 }
 
