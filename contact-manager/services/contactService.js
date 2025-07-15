@@ -1,49 +1,46 @@
-const {
-  nameValidation,
-  emailValidation,
-  phoneValidation,
-} = require("../utils/validation");
-const {
-  saveIntoJSON,
-  deleteFromJSON,
-  listJSON,
-  searchInJSON,
-} = require("../utils/fileUtiles");
+const { nameValidation, emailValidation, phoneValidation } = require("../utils/validation")
+const { saveIntoJSON, deleteFromJSON, listJSON, searchInJSON } = require("../utils/fileUtiles")
 
 function serviceAdd(name, email, telephone) {
-  if (
-    nameValidation(name) &&
-    emailValidation(email) &&
-    phoneValidation(telephone)
-  ) {
+  if (nameValidation(name) && emailValidation(email) && phoneValidation(telephone)) {
     const contactDetails = {
       name,
       email,
       telephone,
-    };
-    saveIntoJSON(contactDetails);
+    }
+    saveIntoJSON(contactDetails)
   }
 }
 
 function serviceDelete(email) {
-  if (emailValidation(email)) {
-    deleteFromJSON(email);
-  } else {
-    console.error("✗ Error: Invalid email address. Must contain '@'.");
-  }
+    if (emailValidation(email)) {
+      const { status, message, savedMessage } = deleteFromJSON(email)
+      if (status) {
+        console.log(message) // ✓ Contact deleted
+        console.log(savedMessage) // ✓ Contacts saved
+      } else {
+        console.log(savedMessage) // ✗ Error: cannot write to the file
+                                  // ✗ Error: No contact found with email
+      }
+    }
 }
 
 function serviceSearch(query) {
   if (query.trim() === "") {
-    console.log("✗ Error: invalid search query");
-    return;
+    console.log("✗ Error: invalid search query")
+    return
   }
 
-  searchInJSON(query.trim());
+  try{
+    searchInJSON(query.trim())
+  } catch (err) {
+    console.error(err.message);
+    
+  }
 }
 
 function serviceList() {
-  listJSON();
+  listJSON()
 }
 
 function serviceHelp() {
@@ -61,7 +58,7 @@ Examples:
   node contacts.js add "John Doe" "john@example.com" "555-123-4567"
   node contacts.js search "john"
   node contacts.js delete "john@example.com"
-  `);
+  `)
 }
 
 module.exports = {
@@ -70,4 +67,4 @@ module.exports = {
   serviceSearch,
   serviceList,
   serviceHelp,
-};
+}
