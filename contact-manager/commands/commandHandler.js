@@ -7,17 +7,23 @@ const {
 } = require("../services/contactService");
 
 const commandAdd = (name, email, telephone) => {
-  serviceAdd(name, email, telephone);
+  if ((name, email, telephone)) {
+    serviceAdd(name, email, telephone);
+  } else {
+    console.error(`✗ Error: Missing arguments for add command`);
+  }
 };
 
 const commandList = () => {
   serviceList();
-  //TODO: add error message
 };
 
 const commandSearch = (searchTerm) => {
-  serviceSearch(searchTerm);
-  //TODO: add error message
+  if (searchTerm) {
+    serviceSearch(searchTerm);
+  } else {
+    console.error(`✗ Error: Missing arguments for search command`);
+  }
 };
 
 const commandDelete = (emailToDelete) => {

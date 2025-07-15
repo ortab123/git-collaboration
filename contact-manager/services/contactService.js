@@ -46,20 +46,32 @@ function serviceDelete(email) {
 }
 
 function serviceSearch(query) {
-  if (query.trim() === "") {
+  if (!query) {
     console.log("✗ Error: invalid search query");
     return;
   }
 
-  try {
-    searchInJSON(query.trim());
-  } catch (err) {
-    console.error(err.message);
+  const trimmedQuery = query.trim();
+
+  const { status, message } = searchInJSON(trimmedQuery);
+
+  console.log(`\n=== Search Results for "${trimmedQuery}" ===`);
+
+  if (status) {
+    message.forEach((contact) => console.log(contact));
+  } else {
+    console.log(message); // No contacts found matching
   }
 }
 
 function serviceList() {
-  listJSON();
+  const { status, message } = listJSON();
+  console.log("\n=== All Contacts ===");
+  if (status) {
+    message.forEach((contact) => console.log(contact));
+  } else {
+    console.log("✗ Error: contact list empty");
+  }
 }
 
 function serviceHelp() {

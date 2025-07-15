@@ -34,18 +34,25 @@ const writeContactsToFile = () => {
 };
 
 const printContactList = (list) => {
+  const results = [];
+
   list.forEach((contact, index) => {
-    console.log(
+    results.push(
       `${index + 1}. ${contact.name} - ${contact.email} - ${contact.telephone}`
     );
   });
+
+  return results;
 };
 
 const saveIntoJSON = (newContact) => {
   loadData();
-  contacts.push(newContact);
 
   try {
+    if (contacts.find((contact) => contact.email === newContact.email)) {
+      throw new Error("✗ Error: Contact with this email already exists");
+    }
+    contacts.push(newContact);
     const jsonData = JSON.stringify(contacts, null, 2);
 
     fs.writeFileSync(filePath, jsonData, "utf8");
@@ -85,10 +92,8 @@ const deleteFromJSON = (email) => {
 
 const listJSON = () => {
   loadData();
-  console.log("\n=== All Contacts ===");
-  printContactList(contacts);
-  //TODO: remove printContactList to serviceSearch
-  //printContactList must return am array to serviceSearch
+  const allContacts = printContactList(contacts);
+  return { status: true, message: allContacts };
 };
 
 const searchInJSON = (param) => {
@@ -97,18 +102,19 @@ const searchInJSON = (param) => {
 
   const contactToFind = contacts.filter(
     (contact) =>
-      contact.email === param ||
+      contact.email.toLowerCase().includes(searchParam) ||
       contact.name.toLowerCase().includes(searchParam)
   );
 
-  console.log(`\n=== Search Results for "${param}" ===`);
-
-  if (contactToFind.length === 0) {
-    throw new Error(`No contacts found matching "${param}"`);
-  } else {
-    printContactList(contactToFind);
-    //TODO: remove printContactList logic to serviceSearch
-    //printContactList must return an array to serviceSearch
+  try {
+    if (contactToFind.length === 0) {
+      throw new Error(`No contacts found matching "${param}"`);
+    } else {
+      const finded = printContactList(contactToFind);
+      return { status: true, message: finded };
+    }
+  } catch (err) {
+    return { status: false, message: err.message };
   }
 };
 
