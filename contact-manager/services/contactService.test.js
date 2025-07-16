@@ -1,10 +1,10 @@
 const { serviceAdd, serviceDelete, serviceSearch, serviceList, serviceHelp } = require("./contactService")
 
 const validation = require("../utils/validation")
-const fileUtils = require("../utils/fileUtiles")
+const fileUtils = require("../utils/fileUtils")
 
 jest.mock("../utils/validation")
-jest.mock("../utils/fileUtiles")
+jest.mock("../utils/fileUtils")
 
 describe("contactService", () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-const { saveIntoJSON, deleteFromJSON, listJSON, searchInJSON, loadData, writeContactsToFile, setContacts, printContactList } = require("./fileUtiles")
+const { saveIntoJSON, deleteFromJSON, listJSON, searchInJSON, loadData, writeContactsToFile, setContacts, printContactList } = require("./fileUtils")
 const fs = require("fs")
 const path = require("path")
 
@@ -9,7 +9,7 @@ const dummyContacts = [
   { name: "Jane", email: "jane@example.com", telephone: "555-123-4567" },
 ]
 
-describe("fileUtiles tests", () => {
+describe("fileUtils tests", () => {
   beforeEach(() => jest.clearAllMocks())
 
   test("should log and do nothing if file doesn't exist", () => {

@@ -8,7 +8,7 @@ const {
   deleteFromJSON,
   listJSON,
   searchInJSON,
-} = require("../utils/fileUtiles");
+} = require("../utils/fileUtils");
 
 function serviceAdd(name, email, telephone) {
   if (
