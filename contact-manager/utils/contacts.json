@@ -1,22 +1,12 @@
 [
   {
-    "name": "Aaa",
-    "email": "aaa@email.com",
-    "telephone": "555-1234"
-  },
-  {
-    "name": "Bbb",
-    "email": "bbb@email.com",
-    "telephone": "555-1234"
-  },
-  {
-    "name": "test il",
-    "email": "adf@gmail.com",
-    "telephone": "052-265-7459"
-  },
-  {
-    "name": "Bad User",
+    "name": "John",
     "email": "john@example.com",
-    "telephone": "555-999-1568"
+    "telephone": "555-123-4567"
+  },
+  {
+    "name": "Jane",
+    "email": "jane@example.com",
+    "telephone": "555-123-4567"
   }
 ]

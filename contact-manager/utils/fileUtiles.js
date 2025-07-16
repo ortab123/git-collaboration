@@ -118,9 +118,17 @@ const searchInJSON = (param) => {
   }
 };
 
+const setContacts = (newContacts) => {
+  contacts = newContacts;
+};
+
 module.exports = {
   saveIntoJSON,
   deleteFromJSON,
   listJSON,
   searchInJSON,
+  loadData,
+  writeContactsToFile,
+  setContacts,
+  printContactList
 };
